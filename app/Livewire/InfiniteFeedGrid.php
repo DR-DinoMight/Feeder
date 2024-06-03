@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Article;
+use Livewire\Attributes\Locked;
+use Livewire\Attributes\Session;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,9 +14,12 @@ class InfiniteFeedGrid extends Component
 
     protected $paginationTheme = 'tailwind';
 
+    #[Session]
     public $filterSelected = false;
-    public $showAll = false;
+    #[Session]
+    public $showAll;
     public $feeds;
+    #[Session]
     public $filterFeeds;
 
     public $articles;
@@ -28,7 +33,7 @@ class InfiniteFeedGrid extends Component
 
     public function mount() {
         $this->feeds = auth()->user()->feeds;
-        $this->filterFeeds = $this->feeds;
+
     }
 
     public function toggleFeed($feedId)
