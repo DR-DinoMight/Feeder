@@ -138,7 +138,8 @@ class FeedTools {
             // and using DOMDocument to parse the HTML and find article content
             $response = Http::get($item->get_permalink());
             if (!$response->successful()) {
-                throw new \Exception("Failed to fetch article: {$item->get_permalink()}");
+                Log::alert("Unable to fetch Articles");
+                return "";
             }
             try {
                 $html = $response->body();
@@ -156,7 +157,6 @@ class FeedTools {
                 return '';
             }
         }
-
 
 
         if ($data) {
