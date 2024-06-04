@@ -20,7 +20,7 @@ class InfiniteFeedGrid extends Component
     public $showAll;
     public $feeds;
     #[Session]
-    public $filterFeeds = [];
+    public $filterFeeds;
 
     public $articles;
     public $amount = 10;
