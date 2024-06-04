@@ -20,7 +20,7 @@ class InfiniteFeedGrid extends Component
     public $showAll;
     public $feeds;
     #[Session]
-    public $filterFeeds;
+    public $filterFeeds = [];
 
     public $articles;
     public $amount = 10;
@@ -95,7 +95,12 @@ class InfiniteFeedGrid extends Component
                 $query->where('is_read', false);
             }
         })
-        ->whereIn('feed_id', $this->filterFeeds->pluck('id'))
+        ->where(function ($query) {
+            if ($this->filterFeeds) {
+                $query->whereIn('feed_id', $this->filterFeeds->pluck('id'));
+            }
+        })
+
         ->orderBy('published_at', 'desc')
         ->with('feed')
         ->take($this->amount)
