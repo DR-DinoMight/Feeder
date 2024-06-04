@@ -33,7 +33,7 @@ class InfiniteFeedGrid extends Component
 
     public function mount() {
         $this->feeds = auth()->user()->feeds;
-
+        $this->filterFeeds = collect([]);
     }
 
     public function toggleFeed($feedId)
