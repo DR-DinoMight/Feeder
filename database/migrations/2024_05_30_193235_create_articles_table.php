@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('feed_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('link');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->text('content')->nullable();
             $table->string('category')->nullable();
             $table->string('author')->nullable();

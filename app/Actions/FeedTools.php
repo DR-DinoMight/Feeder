@@ -138,7 +138,8 @@ class FeedTools {
             // and using DOMDocument to parse the HTML and find article content
             $response = Http::get($item->get_permalink());
             if (!$response->successful()) {
-                throw new \Exception("Failed to fetch article: {$item->get_permalink()}");
+                Log::alert("Unable to fetch Articles");
+                return "";
             }
             try {
                 $html = $response->body();
@@ -158,7 +159,6 @@ class FeedTools {
         }
 
 
-
         if ($data) {
             $convertor = new HtmlConverter();
             Log::info("Converting content");
@@ -174,10 +174,13 @@ class FeedTools {
     }
 
 
-    public static function processArticles()
+    public static function processArticles($feeds = null)
     {
-        $feeds = Feed::where('last_fetched_at', '<', now()->subHours(1))
+        if (!empty($feeds)) {
+            $feeds = Feed::where('last_fetched_at', '<', now()->subHours(1))
             ->orWhereNull('last_fetched_at')->get();
+        }
+
         foreach ($feeds as $feed) {
             $feedItems = FeedTools::fetchFeedItems($feed->url);
 

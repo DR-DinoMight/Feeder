@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('title');
             $table->string('url');
             $table->timestamp('last_fetched_at')->nullable();
             $table->timestamps();
