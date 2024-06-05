@@ -174,10 +174,13 @@ class FeedTools {
     }
 
 
-    public static function processArticles()
+    public static function processArticles($feeds = null)
     {
-        $feeds = Feed::where('last_fetched_at', '<', now()->subHours(1))
+        if (!empty($feeds)) {
+            $feeds = Feed::where('last_fetched_at', '<', now()->subHours(1))
             ->orWhereNull('last_fetched_at')->get();
+        }
+
         foreach ($feeds as $feed) {
             $feedItems = FeedTools::fetchFeedItems($feed->url);
 

@@ -19,6 +19,10 @@ class Feed extends Model
         'icon',
     ];
 
+    protected $casts = [
+        'last_fetched_at' => 'datetime',
+    ];
+
     /**
      * Get the user that owns the Feed
      *
