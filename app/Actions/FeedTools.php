@@ -4,12 +4,14 @@ namespace App\Actions;
 
 use App\Models\Feed;
 use DOMDocument;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use League\HTMLToMarkdown\HtmlConverter;
 use Masterminds\HTML5;
 use SimplePie\Item;
 use SimplePie\SimplePie;
+use Str;
 
 class FeedTools {
      // Function to check if the URL is a valid RSS feed
@@ -179,6 +181,13 @@ class FeedTools {
         if ($feeds === null) {
             $feeds = Feed::where('last_fetched_at', '<', now()->subHours(1))
             ->orWhereNull('last_fetched_at')->get();
+        }
+
+        // if $feeds is UUID, Fetch Feed and convert to collection
+        if ($feeds instanceof Feed) {
+            $feeds = collect([$feeds]);
+        } elseif (!$feeds instanceof Collection) {
+            return;
         }
 
         foreach ($feeds as $feed) {

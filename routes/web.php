@@ -26,5 +26,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('feeds', FeedsController::class)->only(['index', 'show', 'destroy']);
-    Route::get('feeds/{id}/fetch', [FeedsController::class, 'fetch'])->name('feeds.fetch');
+    Route::get('feeds/{feed}/fetch', [FeedsController::class, 'fetch'])->name('feeds.fetch');
 });

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\FeedTools;
 use App\Jobs\FetchFeed;
+use App\Jobs\FetchSingleFeed;
 use App\Models\Feed;
 use Illuminate\Http\Request;
 
@@ -43,9 +43,9 @@ class FeedsController extends Controller
      * @param Feed $feed
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function fetch(Request $request, Feed $feed)
+    public function fetch(Feed $feed)
     {
-        dispatch(new FetchFeed($feed));
+        FetchSingleFeed::dispatch($feed);
         return redirect(route('feeds.index'))->with('success', 'Feed has been fetched');
     }
 }
