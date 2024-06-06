@@ -16,6 +16,7 @@
         "masterminds/html5": "^2.9",
         "predis/predis": "~2.0",
         "resend/resend-laravel": "^0.11.0",
+        "sentry/sentry-laravel": "^4.5",
         "simplepie/simplepie": "^1.8"
     },
     "require-dev": {

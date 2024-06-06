@@ -176,7 +176,7 @@ class FeedTools {
 
     public static function processArticles($feeds = null)
     {
-        if (!empty($feeds)) {
+        if ($feeds === null) {
             $feeds = Feed::where('last_fetched_at', '<', now()->subHours(1))
             ->orWhereNull('last_fetched_at')->get();
         }
