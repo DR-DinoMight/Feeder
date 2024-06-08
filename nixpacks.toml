@@ -1,13 +1,12 @@
 
 [phases.setup]
-nixPkgs = ["...", "python311Packages.supervisor", "redis"]
+nixPkgs = ["...", "python311Packages.supervisor"]
 
 [phases.build]
 cmds = [
     "mkdir -p /etc/supervisor/conf.d/",
     "cp /assets/worker-*.conf /etc/supervisor/conf.d/",
     "cp /assets/supervisord.conf /etc/supervisord.conf",
-    "cp /assets/redis.conf /etc/redis.conf",
     "chmod +x /assets/start.sh",
     "...",
 ]
@@ -74,7 +73,7 @@ stderr_logfile=/var/log/worker-phpfpm.log
 "worker-laravel.conf" = '''
 [program:worker-laravel]
 process_name=%(program_name)s_%(process_num)02d
-command=bash -c 'sleep 60; exec php /app/artisan horizon --sleep=3 --tries=3 --max-time=3600'
+command=bash -c 'sleep 60; exec php /app/artisan horizon'
 autostart=true
 autorestart=true
 stopasgroup=true
@@ -178,21 +177,4 @@ http {
         }
     }
 }
-'''
-
-"redis.conf" = '''
-bind 0.0.0.0
-port 6379
-dir /var/lib/redis
-logfile /var/log/redis.log
-'''
-
-"worker-redis.conf" = '''
-[program:worker-redis]
-process_name=%(program_name)s
-command=redis-server /etc/redis.conf
-autostart=true
-autorestart=true
-stdout_logfile=/var/log/worker-redis.log
-stderr_logfile=/var/log/worker-redis.log
 '''
