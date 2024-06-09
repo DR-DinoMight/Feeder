@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Actions\FeedTools;
+use App\Models\Feed;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -26,6 +27,9 @@ class FetchArticles implements ShouldQueue
      */
     public function handle(): void
     {
-        FeedTools::processArticles();
+        foreach (Feed::all() as $feed) {
+            $this->appendToChain(FeedTools::processArticles($feed->id));
+        }
+
     }
 }
