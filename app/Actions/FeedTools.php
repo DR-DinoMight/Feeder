@@ -8,6 +8,7 @@ use DOMDocument;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Laravel\Pulse\Facades\Pulse;
 use League\HTMLToMarkdown\HtmlConverter;
 use Masterminds\HTML5;
 use SimplePie\Item;
@@ -203,10 +204,13 @@ class FeedTools
                 return ! Article::where('link', '=', $article['link'])
                     ->where('feed_id', '=', $feed->id)->exists();
             });
+
+            Pulse::record('new_articles', $feed->id, count($newArticles))->count();
             // iterate over each article and make a new entry, ready to bulk insert
             $articles = collect([]);
             foreach ($newArticles as $feedItem) {
                 $articles->push($feed->articles()->make([
+                    'feed_id' => $feed->id,
                     'title' => $feedItem['title'],
                     'content' => $feedItem['content'],
                     'description' => $feedItem['description'],

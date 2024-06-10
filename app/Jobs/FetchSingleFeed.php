@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Actions\FeedTools;
+use App\Models\Feed;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,7 +17,7 @@ class FetchSingleFeed implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public string $id)
+    public function __construct(public Feed $feed)
     {
     }
 
@@ -25,6 +26,6 @@ class FetchSingleFeed implements ShouldQueue
      */
     public function handle(): void
     {
-        FeedTools::processArticles($this->id);
+        FeedTools::processArticles($this->feed);
     }
 }
