@@ -28,7 +28,7 @@ class FetchArticles implements ShouldQueue
     public function handle(): void
     {
         foreach (Feed::all() as $feed) {
-            $this->appendToChain(FeedTools::processArticles($feed->id));
+            FeedTools::processArticles($feed->id);
         }
 
     }
