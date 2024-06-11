@@ -94,7 +94,7 @@ class FeedTools
         $feed->handle_content_type();
 
         if ($feed->error()) {
-            throw new \Exception($feed->error());
+            throw new \Exception("{$url} - {$feed->error()}");
         }
 
         return $feed;
