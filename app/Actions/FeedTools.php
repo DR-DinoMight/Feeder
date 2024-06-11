@@ -140,30 +140,6 @@ class FeedTools
             $html5Parser = new HTML5();
             $dom = $html5Parser->loadHTML($data);
             $data = $dom->saveHTML();
-        } else {
-            // try and get the Article content from the HTML, by fetching $item->get_permalink()
-            // and using DOMDocument to parse the HTML and find article content
-            $response = Http::get($item->get_permalink());
-            if (! $response->successful()) {
-                Log::alert('Unable to fetch Articles');
-
-                return '';
-            }
-            try {
-                $html = $response->body();
-                $html5Parser = new HTML5();
-                $dom = $html5Parser->loadHTML($html);
-
-                $article = $dom->getElementsByTagName('article');
-                if ($article) {
-                    if ($article->count() > 0 && $article->item(0)->nodeValue) {
-                        $data = $article->item(0)->nodeValue;
-                    }
-                }
-                Log::info('Found article in HTML');
-            } catch (\Exception $e) {
-                return '';
-            }
         }
 
         if ($data) {
