@@ -75,7 +75,7 @@ class FeedTools
         $url = parse_url($url, PHP_URL_HOST);
         $url = explode('.', $url);
         $url = $url[count($url) - 2].'.'.$url[count($url) - 1];
-        $url = 'https://www.google.com/s2/favicons?domain='.$url;
+        $url = 'https://www.google.com/s2/favicons?sz=32&domain_url='.$url;
 
         return $url;
     }
@@ -118,7 +118,7 @@ class FeedTools
                 'link' => $item->get_permalink(),
                 'description' => $item->get_description(),
                 'published_at' => $item->get_date(),
-                'author' => $item->get_author()->name ?? $item->get_author()->email,
+                'author' => $item->get_author()->name ?? ($item->get_author()?->email ?? ''),
                 'content' => self::fetchContent($item),
                 'category' => $item->get_category()?->term ?? null,
             ];
