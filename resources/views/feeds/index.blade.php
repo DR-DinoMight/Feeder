@@ -33,39 +33,44 @@
                                     </a>
                                 </td>
                                 <td class="px-4 py-3">
-                                    {{ $feed->last_fetched_at->format('d/m/Y H:i:s') }}
+                                @empty($feed->last_fetched_at)
+                                    Not Fetched
+                                @else
+                                    {{ $feed->last_fetched_at?->format('d/m/Y H:i:s') }}
                                     <span class="text-gray-500">
-                                        ({{ $feed->last_fetched_at->diffForHumans() }})
+                                        ({{ $feed->last_fetched_at?->diffForHumans() }})
                                     </span>
-                                </td>
-                                <td class="px-4 py-3">
-                                    <div class="flex flex-col items-center">
-                                        <x-link :href="route('feeds.show', $feed)" :active="request()->routeIs('feeds.show', $feed)">Details</x-link>
-                                        <x-link :href="route('feeds.fetch', $feed)" :active="request()->routeIs('feeds.fetch', $feed)">Fetch</x-link>
+                                @endempty
 
-                                        <form action="{{ route('feeds.destroy', $feed) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this feed?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-button type="submit">Delete</x-button>
-                                        </form>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex flex-col items-center">
+                                    <x-link :href="route('feeds.show', $feed)" :active="request()->routeIs('feeds.show', $feed)">Details</x-link>
+                                    <x-link :href="route('feeds.fetch', $feed)" :active="request()->routeIs('feeds.fetch', $feed)">Fetch</x-link>
 
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td class="px-4 py-3 text-gray-500" colspan="4">
-                                    No feeds found.
-                                    <a href="{{ route('feeds.create') }}" class="text-blue-500 hover:text-blue-700">
-                                        Create a feed
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+                                    <form action="{{ route('feeds.destroy', $feed) }}" method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this feed?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-button type="submit">Delete</x-button>
+                                    </form>
+
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td class="px-4 py-3 text-gray-500" colspan="4">
+                                No feeds found.
+                                <a href="{{ route('feeds.create') }}" class="text-blue-500 hover:text-blue-700">
+                                    Create a feed
+                                </a>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 </x-app-layout>
