@@ -8,12 +8,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/article/{id}/read', function($id) {
+Route::get('/article/{id}/read', function ($id) {
     $article = Article::findOrFail($id);
-        $article->is_read = true;
-        $article->save();
+    $article->is_read = true;
+    $article->save();
 
-        return redirect($article->link);
+    return redirect($article->link);
 })->name('articles.read');
 
 Route::middleware([

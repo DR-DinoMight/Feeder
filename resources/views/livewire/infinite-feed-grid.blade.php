@@ -7,13 +7,13 @@
 
     <div class="mb-4">
         <details @if ($filterSelected) open @endif class="mb-4">
-            <summary class="text-lg font-semibold text-blue-500" wire:click.prevent.stop="toggleFilterSelected">Filters
+            <summary class="text-lg font-semibold text-blue-300" wire:click.prevent.stop="toggleFilterSelected">Filters
             </summary>
             <div class="flex">
                 <div class="w-1/3">
                     <div class="flex items-center">
                         <button type="button" wire:click.stop="toggleShowAll"
-                            class="{{ $showAll ? 'bg-indigo-600' : 'bg-gray-200' }} relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out bg-gray-200 border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                            class="{{ $showAll ? 'bg-blue-600' : 'bg-gray-200' }} relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out bg-gray-200 border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
                             role="switch" aria-checked="false" aria-labelledby="annual-billing-label">
                             <span aria-hidden="true"
                                 class=" {{ $showAll ? 'translate-x-5' : 'translate-x-0' }} inline-block w-5 h-5 transition duration-200 ease-in-out transform translate-x-0 bg-white rounded-full shadow pointer-events-none ring-0"></span>
@@ -26,7 +26,7 @@
                     @foreach ($feeds as $feed)
                         <div class="flex items-center">
                             <button type="button" wire:click.stop="toggleFeed({{ $feed->id }})"
-                                class="{{ $this->hasToggledFeed($feed->id) ? 'bg-indigo-600' : 'bg-gray-200' }} relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out bg-gray-200 border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                                class="{{ $this->hasToggledFeed($feed->id) ? 'bg-blue-600' : 'bg-gray-200' }} relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out bg-gray-200 border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
                                 role="switch" aria-checked="false" aria-labelledby="annual-billing-label">
                                 <span aria-hidden="true"
                                     class=" {{ $this->hasToggledFeed($feed->id) ? 'translate-x-5' : 'translate-x-0' }} inline-block w-5 h-5 transition duration-200 ease-in-out transform translate-x-0 bg-white rounded-full shadow pointer-events-none ring-0"></span>
@@ -47,9 +47,8 @@
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
 
             @forelse ($articles as $item)
-                <div
-                    class="p-4 bg-white rounded-lg shadow cursor-pointer dark:bg-gray-800 hover:opacity-85 hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <a href="{{ $item['link'] }}" class="text-blue-600 dark:text-blue-400" target="_blank"
+                <div class="p-4 bg-white dark:bg-gray-800 dark:hover:bg-gray-850 hover:opacity-65">
+                    <a href="{{ $item['link'] }}" class="text-blue-600 dark:text-blue-200" target="_blank"
                         wire:click='markAsRead({{ $item->id }})' wire:click="markAsRead({{ $item['id'] }})">
                         <h3 class="flex text-lg font-semibold"><img src="{{ $item->feed->icon }}"
                                 class="w-5 h-5 mr-4 rounded-full" />{{ $item['title'] }}</h3>

@@ -1,11 +1,7 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            {{ __('Feeds') }}
-        </h2>
-    </x-slot>
+    <x-status-messages />
 
-    <div class="py-12">
+    <div>
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg">
                 <table class="w-full">
@@ -27,7 +23,7 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <a href="{{ $feed->url }}" target="_blank"
-                                        class="text-blue-500 hover:text-blue-700">
+                                        class="text-blue-300 hover:text-blue-400">
                                         {{ $feed->url }}
                                         <span class="sr-only">Opens in a new window</span>
                                     </a>
